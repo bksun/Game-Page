@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
+
 
 class App extends Component {
   render() {
@@ -17,7 +19,7 @@ class App extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Learn React
+            <Link to="games">Games</Link>
           </a>
         </header>
       </div>
