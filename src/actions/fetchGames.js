@@ -1,4 +1,5 @@
 export const SET_GAMES = 'SET_GAMES';
+export const ADD_GAME  = 'ADD_GAME';
 
 export function setGames(games){
     console.log(games);
@@ -6,6 +7,16 @@ export function setGames(games){
     return {
         type: SET_GAMES,
         games
+    }
+}
+
+
+export function addGame(game){
+    console.log(game);
+
+    return {
+        type: ADD_GAME,
+        game
     }
 }
 
@@ -28,7 +39,8 @@ export function saveGame(data) {
                 "content-type": "application/json"
              }
             }
-        ).then(handleResponse);
+        ).then(handleResponse)
+         .then(data => dispatch(addGame(data.game)));
     }
 }
 

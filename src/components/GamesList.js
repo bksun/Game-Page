@@ -1,18 +1,24 @@
 import React from 'react';
+import GameCard from './GameCard';
 import PropTypes from 'prop-types';
 
-const emptyMessage = (
-    <p>There is no games available for you.</p>
-);
 
-const gameList = (
-    <p>Following Games List are available for you.</p>
-);
+export default function GamesList({ games }) {
 
-export default function GamesList({games}) {
+    const emptyMessage = (
+        <p>There is no games available for you.</p>
+    );
+
+    const gameList = (
+        <div class="ui four cards">
+            {games.map(game => <GameCard game={game} key={game._id} />)}            
+        </div>
+
+    );
+
     return (
         <div>
-            {games.length === 0 ? emptyMessage : gameList }
+            {games.length === 0 ? emptyMessage : gameList}
         </div>
     )
 }
