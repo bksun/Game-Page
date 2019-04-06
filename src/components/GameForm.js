@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
+import {connect} from 'react-redux';
+import { saveGame } from "../actions/fetchGames";
 
 export class GameForm extends Component {
     state = {
         title: '',
         cover: '',
-        errors: {}
+        errors: {},
+        loading: false
     }
 
     handleChange = (e) => {
@@ -38,13 +41,27 @@ export class GameForm extends Component {
         }
 
         this.setState({ errors });
+
+        let isValid = Object.keys(errors).length === 0;
+
+        if (isValid) {
+            const { title, cover } = this.state;
+            this.setState({loading: true});
+            this.props.saveGame({title, cover}).then(
+                () => {},
+                (err) => err.response.json().then(
+                    ({errors}) => this.setState({errors, loading: false})
+                )
+            )
+        }
+
+
     }
 
     render() {
         return (
 
-            <form onSubmit={this.handleSubmit}>
-                <div class="ui form">
+            <form className={classnames('ui', 'form', {loading: this.state.loading})} onSubmit={this.handleSubmit}>
                     <h2>Add new game</h2>
 
                     <div className={classnames('feild', { error: !!this.state.errors.title })} >
@@ -74,10 +91,9 @@ export class GameForm extends Component {
                         <button className="ui primary button">Save</button>
                     </div>
 
-                </div>
             </form>
         );
     }
 }
 
-export default GameForm;
+export default connect(null, {saveGame}) (GameForm);

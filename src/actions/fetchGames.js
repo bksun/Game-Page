@@ -9,11 +9,46 @@ export function setGames(games){
     }
 }
 
+function handleResponse(response) {
+    if (response.ok) {
+        return response.json();
+    } else {
+        let error = new Error(response.statusText);
+        error.response =  response;
+        throw error;
+    }
+}
+
+export function saveGame(data) {
+    return dispatch => {
+        return fetch('http://localhost:3100/api/games', {
+            method: 'post',
+            body: JSON.stringify(data),
+            headers: {
+                "content-type": "application/json"
+             }
+            }
+        ).then(handleResponse);
+    }
+}
+
 export function fetchGames() {
     return dispatch => { //call a function by passing a dispatch function to it.
         // alert('fetching data from api');
-        fetch('http://www.mocky.io/v2/5ca587d0330000f1372ea780')
+        fetch('http://localhost:3100/api/games')
         .then(res => res.json())
         .then(resGames => dispatch(setGames(resGames)));
     }
 }
+
+
+
+// [
+//     {"title": "cricket", "cover": ""},
+//     {"title": "hockey", "cover": ""},
+//     {"title": "football", "cover": ""},
+//     {"title": "badminton", "cover": ""},
+//     {"title": "snookers", "cover": ""},
+//     {"title": "table tennis", "cover": ""},
+//     {"title": "kabaddi", "cover": ""}
+// ]
