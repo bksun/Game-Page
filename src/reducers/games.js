@@ -1,4 +1,6 @@
-import {SET_GAMES, ADD_GAME, GAME_FETCHED, GAME_UPDATED} from '../actions/fetchGames';
+import {SET_GAMES, ADD_GAME, GAME_FETCHED, 
+    GAME_UPDATED, GAME_DELETED} from '../actions/fetchGames';
+
 export default function games(state = [], action = {}) {
     
     switch(action.type) {
@@ -9,6 +11,14 @@ export default function games(state = [], action = {}) {
             ];
         case SET_GAMES:
             return action.games;
+        
+        case GAME_DELETED:
+            alert(`delete reducer called: ${action.game._id}`);
+            return state.filter(item => {
+                if (item._id !== action.game._id) {
+                    return item;
+                }
+            });
 
         case GAME_UPDATED:
             alert('reducer called');

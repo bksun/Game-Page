@@ -2,6 +2,7 @@ export const SET_GAMES = 'SET_GAMES';
 export const ADD_GAME  = 'ADD_GAME';
 export const GAME_FETCHED = 'GAME_FETCHED';
 export const GAME_UPDATED = 'GAME_UPDATED';
+export const GAME_DELETED = 'GAME_DELETED';
 
 export function setGames(games){
     console.log(games);
@@ -27,6 +28,13 @@ export function gameUpdated(game) {
     }
 }
 
+export function gameDeleted(game) {
+    return {
+        type: GAME_DELETED,
+        game
+    }
+}
+
 export function gameFetched(game) {
     console.log('Game selected to take edit action:', game);
     return {
@@ -46,6 +54,19 @@ function handleResponse(response) {
     }
 }
 
+export function deleteGame(_id) {
+
+    alert(`action updated from action: ${_id}`);
+    return dispatch => {
+        return fetch(`http://localhost:3100/api/games/${_id}`, {
+            method: 'delete'
+            }
+        ).then(handleResponse)
+         .then(data => dispatch(gameDeleted(data)));
+    }
+}
+
+
 export function updateGame(data) {
 
     alert(`action updated from action: ${data._id}`);
@@ -61,7 +82,6 @@ export function updateGame(data) {
          .then(data => dispatch(gameUpdated(data.game)));
     }
 }
-
 
 export function fetchGame(id) {
     return dispatch => {
@@ -94,15 +114,3 @@ export function fetchGames() {
         .then(resGames => dispatch(setGames(resGames)));
     }
 }
-
-
-
-// [
-//     {"title": "cricket", "cover": ""},
-//     {"title": "hockey", "cover": ""},
-//     {"title": "football", "cover": ""},
-//     {"title": "badminton", "cover": ""},
-//     {"title": "snookers", "cover": ""},
-//     {"title": "table tennis", "cover": ""},
-//     {"title": "kabaddi", "cover": ""}
-// ]

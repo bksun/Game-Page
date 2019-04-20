@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-export default function GameCard({ game }) {
+export default function GameCard({ game, deleteGame }) {
 
     return (
         <div className="ui card">
@@ -18,7 +18,7 @@ export default function GameCard({ game }) {
             <div className="extra content">
                 <div className="ui two button">
                     <Link to={`/games/${game._id}`} className="ui basic button green">Edit</Link>
-                    <Link to={`/games/${game._id}`} className="ui basic button red">Delete</Link>
+                    <Link className="ui basic button red" onClick={() => deleteGame(game._id)}>Delete</Link>
                 </div>
             </div>
         </div>
@@ -26,5 +26,6 @@ export default function GameCard({ game }) {
 }
 
 GameCard.propTypes = {
-    game: PropTypes.object.isRequired
+    game: PropTypes.object.isRequired,
+    deleteGame: PropTypes.func.isRequired
 }
