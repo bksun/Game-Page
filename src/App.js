@@ -14,8 +14,8 @@ class App extends Component {
           <Link className="item" activeClassName="active" exact to="/games">Games</Link>
           <Link className="item" activeClassName="active" exact to="/games/new">Add New Game</Link>
         </div>
-        <Route exact path="/games/new" component={GameForm} />
-        <Route exact path="/games/:_id" component={GameForm} />
+        <Route exactly path="/games/new" component={GameForm} />
+        <Route exactly path="/games/:_id" component={GameForm} />
         <Route exact path="/games" component={GamesPage} />
       </div>
       

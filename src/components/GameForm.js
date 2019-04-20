@@ -83,7 +83,7 @@ export class GameForm extends Component {
         const form = <form className={classnames('ui', 'form', { loading: this.state.loading })} onSubmit={this.handleSubmit}>
             <h2>Add new game</h2>
 
-            {!!this.state.errors.global && <div class="ui negative message"><p>{this.state.errors.global}</p></div>}
+            {this.state.errors.global && <div class="ui negative message"><p>{this.state.errors.global}</p></div>}
 
             <div className={classnames('feild', { error: !!this.state.errors.title })} >
                 <label htmlFor="title">Title</label>
