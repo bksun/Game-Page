@@ -1,5 +1,7 @@
 export const SET_GAMES = 'SET_GAMES';
 export const ADD_GAME  = 'ADD_GAME';
+export const GAME_FETCHED = 'GAME_FETCHED';
+export const GAME_UPDATED = 'GAME_UPDATED';
 
 export function setGames(games){
     console.log(games);
@@ -10,18 +12,32 @@ export function setGames(games){
     }
 }
 
-
 export function addGame(game){
     console.log(game);
-
     return {
         type: ADD_GAME,
         game
     }
 }
 
+export function gameUpdated(game) {
+    return {
+        type: GAME_UPDATED,
+        game
+    }
+}
+
+export function gameFetched(game) {
+    console.log('Game selected to take edit action:', game);
+    return {
+        type: GAME_FETCHED,
+        game
+    }
+}
+
 function handleResponse(response) {
     if (response.ok) {
+        alert('handle request from action')
         return response.json();
     } else {
         let error = new Error(response.statusText);
@@ -29,6 +45,32 @@ function handleResponse(response) {
         throw error;
     }
 }
+
+export function updateGame(data) {
+
+    alert(`action updated from action: ${data._id}`);
+    return dispatch => {
+        return fetch(`http://localhost:3100/api/games/${data._id}`, {
+            method: 'put',
+            body: JSON.stringify(data),
+            headers: {
+                "content-type": "application/json"
+             }
+            }
+        ).then(handleResponse)
+         .then(data => dispatch(gameUpdated(data.game)));
+    }
+}
+
+
+export function fetchGame(id) {
+    return dispatch => {
+        return fetch(`http://localhost:3100/api/games/${id}`)
+        .then(res => res.json())
+        .then(data => dispatch(gameFetched(data)));
+    }
+}
+
 
 export function saveGame(data) {
     return dispatch => {

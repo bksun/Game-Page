@@ -8,13 +8,14 @@ class App extends Component {
   render() {
     return (
 
-      <div class="ui container">
-        <div class="ui three item menu" >
+      <div className="ui container">
+        <div className="ui three item menu" >
           <Link className="item" activeClassName="active" exact to="/">Home</Link>
           <Link className="item" activeClassName="active" exact to="/games">Games</Link>
           <Link className="item" activeClassName="active" exact to="/games/new">Add New Game</Link>
         </div>
         <Route exact path="/games/new" component={GameForm} />
+        <Route exact path="/games/:_id" component={GameForm} />
         <Route exact path="/games" component={GamesPage} />
       </div>
       

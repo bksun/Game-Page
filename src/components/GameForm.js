@@ -2,15 +2,22 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import { Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
-import { saveGame } from "../actions/fetchGames";
+import { saveGame, fetchGame, updateGame } from "../actions/fetchGames";
 export class GameForm extends Component {
 
     state = {
-        title: '',
-        cover: '',
+        _id: this.props.game ? this.props.game._id : null,
+        title: this.props.game ? this.props.game.title : '',
+        cover: this.props.game ? this.props.game.cover : '',
         errors: {},
         loading: false,
         done: false
+    }
+
+    componentDidMount = () => {
+        if (this.props.match.params._id) {
+            this.props.fetchGame(this.props.match.params._id);
+        }
     }
 
     handleChange = (e) => {
@@ -47,14 +54,26 @@ export class GameForm extends Component {
         let isValid = Object.keys(errors).length === 0;
 
         if (isValid) {
-            const { title, cover } = this.state;
+            const { _id, title, cover } = this.state;
             this.setState({ loading: true });
-            this.props.saveGame({ title, cover }).then(
-                () => { this.setState({ done: true }) },
-                (err) => err.response.json().then(
-                    ({ errors }) => this.setState({ errors, loading: false })
+            console.log('from game form:', this.state);
+            if (_id) {
+                alert('action updated from form');
+                this.props.updateGame({ _id, title, cover }).then(
+                    () => { this.setState({ done: true }) },
+                    (err) => err.response.json().then(
+                        ({ errors }) => this.setState({ errors, loading: false })
+                    )
                 )
-            )
+            } else {
+                this.props.saveGame({ title, cover }).then(
+                    () => { this.setState({ done: true }) },
+                    (err) => err.response.json().then(
+                        ({ errors }) => this.setState({ errors, loading: false })
+                    )
+                )
+
+            }
         }
 
 
@@ -104,4 +123,14 @@ export class GameForm extends Component {
     }
 }
 
-export default connect(null, { saveGame })(GameForm);
+function mapStateToProps(state, props) {
+    if (props.match.params._id) {
+        return {
+            game: state.games.find(item => item._id === props.match.params._id)
+        }
+    }
+
+    return { game: null };
+}
+
+export default connect(mapStateToProps, { saveGame, fetchGame, updateGame })(GameForm);
