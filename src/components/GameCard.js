@@ -1,24 +1,35 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export default function GameCard({ game, deleteGame }) {
+    const defaultPic = "https://m.media-amazon.com/images/M/MV5BYTRhZWVkNTctMzRmYy00MDk1LWIzNDYtMjA1ZGE5YWJkYjU0XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_UY268_CR4,0,182,268_AL__QL50.jpg";
+    let styleCard = {
+        width: '250px',
+        height: 'auto',
+        margin: '10px'
+    }
+
+    let linkStyle = {
+        margin: '5px'
+    }
+
+    let imgStyle = {
+        height: '350px'
+    }
 
     return (
-        <div className="ui card">
-            <div className="image" >
-                <img src={game.cover} alt="game cover" />
-            </div>
-            <div className="content">
-                <div className="header">
-                    {game.title}
+        <div>
+            <div className="card" style={styleCard}>
+                <div className="image" >
+                    <img style={imgStyle} src={game.cover || defaultPic} className="card-img-top" alt={game.title} />
                 </div>
-            </div>
-
-            <div className="extra content">
-                <div className="ui two button">
-                    <Link to={`/games/doc/${game._id}`} className="ui basic button green">Edit</Link>
-                    <Link className="ui basic button red" onClick={() => deleteGame(game._id)}>Delete</Link>
+                <div className="card-body text-center">
+                    <div className="card-title">
+                        {game.title}
+                    </div>
+                    <Link to={`/games/doc/${game._id}`} className="btn btn-success" style={linkStyle} >Edit</Link>
+                    <Link  className="btn btn-danger" style={linkStyle}  onClick={() => deleteGame(game._id)}>Delete</Link>
                 </div>
             </div>
         </div>

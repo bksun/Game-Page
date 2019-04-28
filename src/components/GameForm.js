@@ -92,8 +92,10 @@ export class GameForm extends Component {
                     value={this.state.title}
                     onChange={this.handleChange}
                     type="text" id="title" />
+                    
                 <span>{this.state.errors.title}</span>
             </div>
+            <br></br>
             <div className={classnames('feild', { error: !!this.state.errors.cover })} >
                 <label htmlFor="cover">Cover URL</label>
                 <input type="text"
@@ -104,10 +106,11 @@ export class GameForm extends Component {
                     id="cover" />
                 <span>{this.state.errors.cover}</span>
             </div>
+            <br></br>
             <div className="feild">
                 {this.state.cover !== '' && <img src={this.state.cover} alt="cover" className="ui small bordered image" />}
             </div>
-
+            <br></br>
             <div className="feild">
                 <button className="ui primary button">Save</button>
             </div>

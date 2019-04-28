@@ -1,3 +1,6 @@
+// const qs = require('query-string');
+// console.log(location.search);
+// const parsed = qs.parse(location.search);
 export const SET_GAMES = 'SET_GAMES';
 export const ADD_GAME  = 'ADD_GAME';
 export const GAME_FETCHED = 'GAME_FETCHED';
@@ -106,10 +109,10 @@ export function saveGame(data) {
     }
 }
 
-export function fetchGames() {
+export function fetchGames(pageNo, size) {
     return dispatch => { //call a function by passing a dispatch function to it.
         // alert('fetching data from api');
-        fetch('http://localhost:3100/api/games')
+        fetch(`http://localhost:3100/api/games?pageNo=${pageNo}&size=${size}`)
         .then(res => res.json())
         .then(resGames => dispatch(setGames(resGames)));
     }

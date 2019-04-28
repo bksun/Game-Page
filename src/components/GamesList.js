@@ -10,10 +10,9 @@ export default function GamesList({ games, deleteGame }) {
     );
 
     const gameList = (
-        <div className="ui four cards">
+        <div className="card-deck">
             {games.map(game => <GameCard game={game} key={game._id} deleteGame={deleteGame} />)}            
         </div>
-
     );
 
     return (
