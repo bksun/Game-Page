@@ -8,7 +8,8 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import rootReducer from './rootReducer';
 import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
+
 
 
 const store = createStore(
